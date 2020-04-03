@@ -1,9 +1,9 @@
 <Configuration>
 <VGpu>Default</VGpu>
-<Networking>Default</Networking>
+<Networking>Disabled</Networking>
 <MappedFolders>
    <MappedFolder>
-     <HostFolder>C:\Users\sdaa\Downloads\SandBox</HostFolder>
+     <HostFolder>C:\Users\sdaa\Downloads</HostFolder>
      <ReadOnly>true</ReadOnly>
    </MappedFolder>
    <MappedFolder>
@@ -16,6 +16,6 @@
    </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-   <Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\scripts\wsb\install-sandbox.cmd</Command>
+   <Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\scripts\wsb\NoNetwork.cmd</Command>
 </LogonCommand>
 </Configuration>
