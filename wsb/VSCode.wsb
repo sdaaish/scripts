@@ -1,0 +1,15 @@
+<Configuration>
+<MappedFolders>
+   <MappedFolder>
+     <HostFolder>C:\Users\sdaa\Downloads\Sandbox</HostFolder>
+     <ReadOnly>true</ReadOnly>
+   </MappedFolder>
+   <MappedFolder>
+     <HostFolder>C:\Users\sdaa\repos\scripts</HostFolder>
+     <ReadOnly>false</ReadOnly>
+   </MappedFolder>
+</MappedFolders>
+<LogonCommand>
+   <Command>C:\users\wdagutilityaccount\desktop\scripts\wsb\VSCode.cmd</Command>
+</LogonCommand>
+</Configuration>
