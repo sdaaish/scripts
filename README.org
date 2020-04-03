@@ -1,7 +1,7 @@
 * Windows utilities
 Various windows utilities
 ** Windows Sandbox
-Under [[file:wsb][Windows Sandbox scripts]]
+Under [[file:wsb][Windows Sandbox scripts]] are configuration and scripts that works for Windows SandBox.
 
-Examples from [[https://techcommunity.microsoft.com/t5/windows-kernel-internals/windows-sandbox-config-files/ba-p/354902?WT.mc_id=thomasmaurer-blog-thmaure][Thomas Maurer]]
-[[https://techcommunity.microsoft.com/t5/windows-kernel-internals/windows-sandbox-config-files/ba-p/354902?WT.mc_id=thomasmaurer-blog-thmaure][Microst Blog about Windows sandbox]]
+- Examples from [[https://techcommunity.microsoft.com/t5/windows-kernel-internals/windows-sandbox-config-files/ba-p/354902?WT.mc_id=thomasmaurer-blog-thmaure][Thomas Maurer]] 
+- [[https://techcommunity.microsoft.com/t5/windows-kernel-internals/windows-sandbox-config-files/ba-p/354902?WT.mc_id=thomasmaurer-blog-thmaure][Microsoft Blog about Windows sandbox]]
