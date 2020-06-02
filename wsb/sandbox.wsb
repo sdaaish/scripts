@@ -16,6 +16,6 @@
    </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-   <Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\scripts\wsb\install-sandbox.cmd</Command>
+   <Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\scripts\wsb\Sandbox-Install.cmd</Command>
 </LogonCommand>
 </Configuration>

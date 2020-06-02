@@ -8,6 +8,10 @@
      <HostFolder>C:\Users\sdaa\repos\scripts</HostFolder>
      <ReadOnly>false</ReadOnly>
    </MappedFolder>
+   <MappedFolder>
+     <HostFolder>C:\Users\sdaa\repos\MyModule</HostFolder>
+     <ReadOnly>false</ReadOnly>
+   </MappedFolder>
 </MappedFolders>
 <LogonCommand>
    <Command>C:\users\wdagutilityaccount\desktop\scripts\wsb\VSCode.cmd</Command>
