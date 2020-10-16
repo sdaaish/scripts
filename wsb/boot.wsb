@@ -8,6 +8,6 @@
    </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-   <Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\boot\bootwsb.cmd</Command>
+   <Command>cmd.exe /c C:\Users\WDAGUtilityAccount\Desktop\boot\Build\bootwsb.cmd</Command>
 </LogonCommand>
 </Configuration>
