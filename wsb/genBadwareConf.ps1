@@ -66,8 +66,8 @@ $wsbContent = @"
 </Configuration>
 "@
 
-Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -Force
-Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -Force
+Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -NoNewLine -Force
+Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -NoNewLine -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
 Write-Output "Start sandbox with `"& ${wsbFile}.`""
