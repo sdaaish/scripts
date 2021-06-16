@@ -28,3 +28,6 @@ Remove-Item ${env:USERPROFILE}\Downloads\CyperChef.zip -Force
 Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\My-Explorer.psm1
 My-Explorer
 
+# Enable debug of SSL in Firefox, Chrome and Wireshark
+$LogFile = Join-Path ${env:USERPROFILE} "Downloads\ssl\ssl.log"
+[System.Environment]::SetEnvironmentVariable("SSLKEYLOGFILE",$LogFile,"USER")
