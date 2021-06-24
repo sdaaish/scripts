@@ -7,5 +7,5 @@ Under [[file:wsb][Windows Sandbox scripts]] are configuration and scripts that w
 - [[https://techcommunity.microsoft.com/t5/windows-kernel-internals/windows-sandbox-config-files/ba-p/354902?WT.mc_id=thomasmaurer-blog-thmaure][Microsoft Blog about Windows sandbox]]
 - [[https://www.netresec.com/?page=Blog&month=2021-05&post=Running-NetworkMiner-in-Windows-Sandbox][Network Miner in WIndows Sandbox]]
 
-Run [[file:wsb/setup.ps1][setup.ps1]] to generate WSB-files for your local installation path. The wsb-files are hardcoded for installtion-paths.
+Run [[file:wsb/setup.ps1][setup.ps1]] to generate WSB-files for your local installation path. The wsb-files are hardcoded for installtion-paths so these need to be generated for the actual directory.
 

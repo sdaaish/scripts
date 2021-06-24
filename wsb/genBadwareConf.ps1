@@ -17,15 +17,15 @@ Run a sandbox that maps files from the download folder. For checking out bad cod
 
 # HostFolders
 $scriptFolder = $PSScriptroot
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "Badware.wsb"
-$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "src\Badware.cmd"
+$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Badware.wsb"
+$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Badware.cmd"
 $sandboxFolder = New-Item ${env:USERPROFILE}\Downloads\Sandbox -ItemType Directory -Force -ErrorAction Ignore
 $sandboxFolderRW = New-Item ${env:USERPROFILE}\Downloads\SandboxRW -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Join-Path -Path ${env:USERPROFILE} -ChildPath scoop
 
 # Guest folders
 $guestHome = "C:\Users\WDAGUtilityAccount"
-$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\Badware.cmd"
+$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\Badware.cmd"
 $guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\Badware.ps1"
 
 # Content of the cmd-file that are used _inside_ the Sandbox

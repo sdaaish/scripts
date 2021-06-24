@@ -1,4 +1,4 @@
-Function My-Explorer {
+Function Set-SBExplorer {
     $key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
     Set-ItemProperty $key AlwaysShowMenus 1
     Set-ItemProperty $key AutoCheckSelect 1
@@ -39,4 +39,4 @@ Function My-Explorer {
     Stop-Process -processname explorer
     Start-Process explorer
 }
-Export-ModuleMember My-Explorer
+

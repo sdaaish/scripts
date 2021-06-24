@@ -14,6 +14,7 @@ scoop install curl
 scoop install networkminer
 scoop install wireshark
 scoop install nmap
+scoop install windows-terminal
 
 # Install VSCode settings
 reg import "${env:USERPROFILE}\scoop\apps\vscode\current\vscode-install-context.reg"
@@ -31,6 +32,9 @@ curl.exe -o ${env:USERPROFILE}\Downloads\CyperChef.zip https://gchq.github.io/Cy
 Expand-Archive ${env:USERPROFILE}\Downloads\CyperChef.zip -DestinationPath ${env:USERPROFILE}\Desktop\CyberChef
 Remove-Item ${env:USERPROFILE}\Downloads\CyperChef.zip -Force
 
-# Local explorer settings
-Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\My-Explorer.psm1
-My-Explorer
+# Local settings
+Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
+Set-SBExplorer
+Set-SBWTSettings
+
+wt.exe

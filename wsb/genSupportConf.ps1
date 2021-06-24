@@ -15,13 +15,17 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. For checking out bad code as an example.
 #>
 
-$scriptFolder = Split-Path -Path $PSScriptroot -Parent
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "Support.wsb"
-$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "Support.cmd"
-$poshFile = Join-Path -Path $PSScriptRoot -ChildPath "Support.ps1"
+# Hostfolders
+$scriptFolder = $PSScriptroot
+$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Support.wsb"
+$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Support.cmd"
 $sandboxFolder = New-Item ~/Downloads/Sandbox -ItemType Directory -Force -ErrorAction Ignore
-$scoopFolder = Convert-Path ~/scoop
-$sandboxHome = "C:\Users\WDAGUtilityAccount"
+$scoopFolder = Join-Path -Path ${env:USERPROFILE} -ChildPath scoop
+
+# Guest folders
+$guestHome = "C:\Users\WDAGUtilityAccount"
+$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\Support.cmd"
+$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\Support.ps1"
 
 # Content of the cmd-file that are used _inside_ the Sandbox
 $cmdContent = @"
@@ -29,22 +33,7 @@ $cmdContent = @"
 
 :: Settings for powershell
 powershell -ExecutionPolicy ByPass -Command {Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser}
-powershell -ExecutionPolicy ByPass -File C:\users\WDAGUtilityAccount\Desktop\Scripts\wsb\Support.ps1
-"@
-
-# Content of Powershell script to use _inside_ sandbox
-$poshContent = @"
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-scoop install git
-scoop bucket add extras
-scoop install vscode
-scoop install putty
-scoop install googlechrome
-scoop install windows-terminal
-reg import "C:\Users\WDAGUtilityAccount\scoop\apps\vscode\current\vscode-install-context.reg"
-Import-Module ${sandboxHome}\Desktop\scripts\wsb\Modules\My-Explorer.psm1
-My-Explorer
+powershell -ExecutionPolicy ByPass -File $guestPoshFile
 "@
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
@@ -65,14 +54,13 @@ $wsbContent = @"
  </MappedFolder>
  </MappedFolders>
   <LogonCommand>
-<Command>cmd.exe /c C:\users\WDAGUtilityAccount\Desktop\scripts\wsb\Support.cmd</Command>
+<Command>cmd.exe /c ${guestCmdFile}</Command>
 </LogonCommand>
 </Configuration>
 "@
 
-Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -Force
-Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -Force
-Set-Content -Path $poshFile -Value $poshContent -Encoding utf8 -Force
+Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -NoNewLine -Force
+Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -NoNewLine -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
-Write-Output "Start sandbox with `"& .\${wsbFile}.`""
+Write-Output "Start sandbox with `"& ${wsbFile}.`""
