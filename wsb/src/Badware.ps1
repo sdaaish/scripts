@@ -13,7 +13,6 @@ scoop install firefox
 scoop install curl
 scoop install networkminer
 scoop install wireshark
-scoop install nmap
 scoop install windows-terminal
 
 # Install VSCode settings
@@ -27,10 +26,19 @@ $LogFile = Join-Path ${env:USERPROFILE} "Downloads\ssl\ssl.log"
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name DNSClient-PS -Force
 
-# Install CyberChef
-curl.exe -o ${env:USERPROFILE}\Downloads\CyperChef.zip https://gchq.github.io/CyberChef/CyberChef_v9.28.0.zip
-Expand-Archive ${env:USERPROFILE}\Downloads\CyperChef.zip -DestinationPath ${env:USERPROFILE}\Desktop\CyberChef
-Remove-Item ${env:USERPROFILE}\Downloads\CyperChef.zip -Force
+# Download CyberChef
+$ccversion = "9.28.0"
+$cyberchefUrl = "https://gchq.github.io/CyberChef/CyberChef_v${ccversion}.zip"
+$ccfile = Join-Path ${env:USERPROFILE} "Downloads\CyberChef_v${ccversion}.zip"
+(New-Object System.Net.WebClient).DownloadFile($cyberchefUrl,$ccfile)
+Expand-Archive -Path $ccfile -DestinationPath ${env:USERPROFILE}\Desktop\CyberChef -Force
+Remove-Item $ccfile -Force
+
+# Download npcap driver
+$npcapVersion = "1.50"
+$npcapUrl = "https://nmap.org/npcap/dist/npcap-${npcapVersion}.exe"
+$npcapFile = Join-Path ${env:USERPROFILE} "Downloads\npcap-${npcapVersion}.exe"
+(New-Object System.Net.WebClient).DownloadFile($npcapUrl, $npcapFile)
 
 # Local settings
 Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
