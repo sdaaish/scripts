@@ -27,7 +27,7 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name DNSClient-PS -Force
 
 # Download CyberChef
-$ccversion = "9.28.0"
+$ccversion = "9.32.1"
 $cyberchefUrl = "https://gchq.github.io/CyberChef/CyberChef_v${ccversion}.zip"
 $ccfile = Join-Path ${env:USERPROFILE} "Downloads\CyberChef_v${ccversion}.zip"
 (New-Object System.Net.WebClient).DownloadFile($cyberchefUrl,$ccfile)
