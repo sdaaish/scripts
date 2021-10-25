@@ -19,8 +19,10 @@ scoop install windows-terminal
 reg import "${env:USERPROFILE}\scoop\apps\vscode\current\vscode-install-context.reg"
 
 # Enable debug of SSL in Firefox, Chrome and Wireshark
+# Create directory, set env variable
 $LogFile = Join-Path ${env:USERPROFILE} "Downloads\ssl\ssl.log"
-[System.Environment]::SetEnvironmentVariable("SSLKEYLOGFILE",$LogFile,"USER")
+New-Item -Path $(Split-Path $Logfile -Parent) -Type Directory
+[System.Environment]::SetEnvironmentVariable("SSLKEYLOGFILE",$LogFile,"Machine")
 
 # Install PS-modules
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -54,4 +56,4 @@ Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
 Set-SBExplorer
 Set-SBWTSettings
 
-wt.exe
+& wt.exe
