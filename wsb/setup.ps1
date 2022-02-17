@@ -1,5 +1,8 @@
 # Extracts scripts to this folder
-$wsbfiles = Get-ChildItem -Path $PSScriptRoot -Filter gen*.ps1
-$wsbfiles| Foreach-Object {
+Get-ChildItem -Path $PSScriptRoot -Filter gen*.ps1 | Foreach-Object {
+    & $_.FullName
+}
+
+Get-ChildItem -Path $PSScriptRoot\src -Filter gen*.ps1 | Foreach-Object {
     & $_.FullName
 }
