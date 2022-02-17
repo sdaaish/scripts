@@ -15,15 +15,18 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. For checking out bad code as an example.
 #>
 
+# The name for the sandbox, can be changed.
+$wsbName = "Emacs"
+
 # Hostfolders
 $scriptFolder = Convert-Path $PSScriptroot\..
-$wsbFile = Join-Path -Path $ScriptFolder -ChildPath "sandboxes\Emacs.wsb"
-$cmdFile = Join-Path -Path $ScriptFolder -ChildPath "build\Emacs.cmd"
+$wsbFile = Join-Path -Path $ScriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
+$cmdFile = Join-Path -Path $ScriptFolder -ChildPath "build\${wsbName}.cmd"
 
 # Guest folders
 $guestHome = "C:\Users\WDAGUtilityAccount"
-$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\Emacs.cmd"
-$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\Emacs.ps1"
+$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\${wsbName}.cmd"
+$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbName}.ps1"
 
 # Content of the cmd-file that are used _inside_ the Sandbox
 $cmdContent = @"

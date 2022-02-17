@@ -15,11 +15,20 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. Installs VSCode.
 #>
 
-$scriptFolder = Split-Path -Path $PSScriptroot -Parent
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "VSCode.wsb"
-$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "VSCode.cmd"
+# The name for the sandbox, can be changed.
+$wsbName = "VSCode"
+
+# Hostfolders
+$scriptFolder = Convert-Path $PSScriptroot\..
+$wsbFile = Join-Path -Path $ScriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
+$cmdFile = Join-Path -Path $ScriptFolder -ChildPath "build\${wsbName}.cmd"
 $sandboxFolder = New-Item ~/Downloads/Sandbox -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Convert-Path ~/scoop
+
+# Guest folders
+$guestHome = "C:\Users\WDAGUtilityAccount"
+$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\${wsbName}.cmd"
+$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbName}.ps1"
 
 # Content of the cmd-file that are used _inside_ the Sandbox
 $cmdContent = @"
@@ -46,13 +55,13 @@ $wsbContent = @"
    </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-   <Command>C:\users\wdagutilityaccount\desktop\scripts\wsb\VSCode.cmd</Command>
+<Command>cmd.exe /c ${guestCmdFile}</Command>
 </LogonCommand>
 </Configuration>
 "@
 
-Set-Content -Path $wsbFile -Value $wsbContent -Force
-Set-Content -Path $cmdFile -Value $cmdContent -Force
+Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -NoNewLine -Force
+Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -NoNewLine -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
 Write-Output "Start sandbox with `"& .\${wsbFile}.`""
