@@ -1,9 +1,11 @@
 # Powershell script to use _inside_ sandbox
+$transcript = Start-Transcript -IncludeInvocationHeader
 
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Force
 
 # Install scoop
-Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh') -ErrorAction Continue
+(New-Object System.Net.WebClient).DownloadFile('https://get.scoop.sh','install.ps1') -ErrorAction Continue
+.\install.ps1 -RunAsAdmin -NoProxy
 
 # Install applications
 $ScoopLog = Join-Path ${env:USERPROFILE} "\Desktop\Scoop.log"
@@ -63,5 +65,4 @@ Set-SBWTSettings
 
 & wt.exe
 
-Set-Content -Path $(Join-Path ${env:USERPROFILE} "Desktop\done.txt") -Value "Installation Done"Set-Content -Path $(Join-Path ${env:USERPROFILE} "Desktop\done.txt") -Value "Installation Done"
-
+Set-Content -Path $(Join-Path ${env:USERPROFILE} "Desktop\done.txt") -Value "Installation Done"
