@@ -21,24 +21,16 @@ $wsbName = "VSCode"
 # Hostfolders
 $scriptFolder = Convert-Path $PSScriptroot\..
 $wsbFile = Join-Path -Path $ScriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
-$cmdFile = Join-Path -Path $ScriptFolder -ChildPath "build\${wsbName}.cmd"
 $sandboxFolder = New-Item ~/Downloads/Sandbox -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Convert-Path ~/scoop
 
 # Guest folders
 $guestHome = "C:\Users\WDAGUtilityAccount"
-$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\${wsbName}.cmd"
 $guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbName}.ps1"
 
 # Content of the cmd-file that are used _inside_ the Sandbox
 $cmdContent = @"
-@echo off
-:: Download VSCode
-
-curl -L "https://update.code.visualstudio.com/latest/win32-x64-user/stable" --output C:\users\WDAGUtilityAccount\Desktop\vscode.exe
-
-REM Install and run VSCode
-C:\users\WDAGUtilityAccount\Desktop\vscode.exe /verysilent /suppressmsgboxes
+Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Maximized -Argumentlist '-NoProfile -NoLogo -ExecutionPolicy Bypass -File $guestPoshFile'
 "@
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
@@ -55,13 +47,12 @@ $wsbContent = @"
    </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-<Command>cmd.exe /c ${guestCmdFile}</Command>
+<Command>${cmdContent}</Command>
 </LogonCommand>
 </Configuration>
 "@
 
 Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -NoNewLine -Force
-Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -NoNewLine -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
-Write-Output "Start sandbox with `"& .\${wsbFile}.`""
+Write-Output "Start sandbox with `"& ${wsbFile}`""

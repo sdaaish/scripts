@@ -15,8 +15,10 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. For checking out bad code as an example. Without networking
 #>
 
+$wsbName = "NoNetwork"
+
 $scriptFolder = Split-Path -Path $PSScriptroot -Parent
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "NoNetwork.wsb"
+$wsbFile = Join-Path -Path $scriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
 $downloadFolder = New-Item ~/Downloads -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Convert-Path ~/scoop
 
@@ -47,4 +49,4 @@ $wsbContent = @"
 Set-Content -Path $wsbFile -Value $wsbContent -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
-Write-Output "Start sandbox with `"& .\${wsbFile}.`""
+Write-Output "Start sandbox with `"& .\${wsbFile}`""

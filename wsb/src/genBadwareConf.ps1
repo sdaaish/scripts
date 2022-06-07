@@ -15,26 +15,23 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. For checking out bad code as an example.
 #>
 
+# The name for the sandbox, can be changed.
+$wsbName = "Badware"
+
 # HostFolders
-$scriptFolder = $PSScriptroot
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Badware.wsb"
-$cmdFile = Join-Path -Path $PSScriptRoot -ChildPath "build\Badware.cmd"
+$scriptFolder = Split-Path $PSScriptroot -Parent
+$wsbFile = Join-Path -Path $scriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
 $sandboxFolder = New-Item ${env:USERPROFILE}\Downloads\Sandbox -ItemType Directory -Force -ErrorAction Ignore
 $sandboxFolderRW = New-Item ${env:USERPROFILE}\Downloads\SandboxRW -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Join-Path -Path ${env:USERPROFILE} -ChildPath scoop
 
 # Guest folders
 $guestHome = "C:\Users\WDAGUtilityAccount"
-$guestCmdFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\build\Badware.cmd"
-$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\Badware.ps1"
+$guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbName}.ps1"
 
-# Content of the cmd-file that are used _inside_ the Sandbox
+# Autorun this _inside_ the Sandbox
 $cmdContent = @"
-@echo off
-
-:: Settings for powershell
-powershell -Command {Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser}
-powershell -ExecutionPolicy ByPass -File $guestPoshFile
+Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Maximized -Argumentlist '-NoProfile -NoLogo -ExecutionPolicy Bypass -File $guestPoshFile'
 "@
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
@@ -61,13 +58,12 @@ $wsbContent = @"
  </MappedFolder>
  </MappedFolders>
   <LogonCommand>
-<Command>cmd.exe /c ${guestCmdFile}</Command>
+<Command>${cmdContent}</Command>
 </LogonCommand>
 </Configuration>
 "@
 
 Set-Content -Path $wsbFile -Value $wsbContent -Encoding utf8 -NoNewLine -Force
-Set-Content -Path $cmdFile -Value $cmdContent -Encoding utf8 -NoNewLine -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
-Write-Output "Start sandbox with `"& ${wsbFile}.`""
+Write-Output "Start sandbox with `"& ${wsbFile}`""

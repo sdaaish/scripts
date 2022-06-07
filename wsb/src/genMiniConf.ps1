@@ -15,8 +15,10 @@ Descriptions of parameter Foobar
 Run a sandbox that maps files from the download folder. Minimal config.
 #>
 
+$wsbName = "Mini"
+
 $scriptFolder = Split-Path -Path $PSScriptroot -Parent
-$wsbFile = Join-Path -Path $PSScriptRoot -ChildPath "Mini.wsb"
+$wsbFile = Join-Path -Path $scriptFolder -ChildPath "sandboxes\${wsbname}.wsb"
 $sandboxFolder = New-Item ~/Downloads -ItemType Directory -Force -ErrorAction Ignore
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
@@ -39,4 +41,4 @@ $wsbContent = @"
 Set-Content -Path $wsbFile -Value $wsbContent -Force
 
 Write-Output "Generated Windows sandbox file in ${wsbFile}."
-Write-Output "Start sandbox with `"& .\${wsbFile}.`""
+Write-Output "Start sandbox with `"& .\${wsbFile}`""
