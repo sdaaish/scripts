@@ -1,0 +1,10 @@
+* Certificates for the Sandbox
+Certificates are installed automatically in the sandbox, if they are placed here with the extension ~.cer~
+
+To get a certificate from the Windows certificate Store, export them with powershell.
+#+begin_src powershell
+$cert = Get-ChildItem  Cert:\LocalMachine\Root\| Where-Object Subject -match "mysubject"
+Export-Certificate -Cert $cert -FilePath cert.cer -Type CERT
+#+end_src
+
+All certificates in the folder will be loaded in the sandbox.
