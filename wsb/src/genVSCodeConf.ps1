@@ -19,7 +19,7 @@ Run a sandbox that maps files from the download folder. Installs VSCode.
 $wsbName = "VSCode"
 
 # Hostfolders
-$scriptFolder = Convert-Path $PSScriptroot\..
+$scriptFolder = Split-Path $PSScriptroot -Parent
 $wsbFile = Join-Path -Path $ScriptFolder -ChildPath "sandboxes\${wsbName}.wsb"
 $sandboxFolder = New-Item ~/Downloads/Sandbox -ItemType Directory -Force -ErrorAction Ignore
 $scoopFolder = Convert-Path ~/scoop
@@ -36,19 +36,19 @@ Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Ma
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
 $wsbContent = @"
 <Configuration>
-<MappedFolders>
+ <MappedFolders>
    <MappedFolder>
      <HostFolder>${sandboxFolder}</HostFolder>
      <ReadOnly>true</ReadOnly>
    </MappedFolder>
    <MappedFolder>
-<HostFolder>${scriptFolder}</HostFolder>
-<ReadOnly>false</ReadOnly>
+    <HostFolder>${scriptFolder}</HostFolder>
+    <ReadOnly>false</ReadOnly>
    </MappedFolder>
-</MappedFolders>
-<LogonCommand>
-<Command>${cmdContent}</Command>
-</LogonCommand>
+ </MappedFolders>
+ <LogonCommand>
+  <Command>${cmdContent}</Command>
+ </LogonCommand>
 </Configuration>
 "@
 
