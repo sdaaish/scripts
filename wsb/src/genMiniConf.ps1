@@ -19,22 +19,22 @@ $wsbName = "Mini"
 
 $scriptFolder = Split-Path -Path $PSScriptroot -Parent
 $wsbFile = Join-Path -Path $scriptFolder -ChildPath "sandboxes\${wsbname}.wsb"
-$sandboxFolder = New-Item ~/Downloads -ItemType Directory -Force -ErrorAction Ignore
+$sandboxFolder = Join-Path -Path $scriptFolder -ChildPath "certificates"
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
 $wsbContent = @"
 <Configuration>
-<VGpu>Default</VGpu>
-<Networking>Default</Networking>
-<MappedFolders>
-   <MappedFolder>
-<HostFolder>${sandboxFolder}</HostFolder>
-<ReadOnly>true</ReadOnly>
-   </MappedFolder>
-</MappedFolders>
-<LogonCommand>
-   <Command>powershell.exe -WindowStyle Normal</Command>
-</LogonCommand>
+ <VGpu>Default</VGpu>
+ <Networking>Default</Networking>
+ <MappedFolders>
+  <MappedFolder>
+   <HostFolder>${sandboxFolder}</HostFolder>
+   <ReadOnly>true</ReadOnly>
+  </MappedFolder>
+ </MappedFolders>
+ <LogonCommand>
+  <Command>Powershell Start-Process Powershell -WorkingDirectory `$HOME -WindowStyle Normal -ArgumentList '-NoProfile -NoExit -ExecutionPolicy ByPass -Command `"Invoke-Command {dir .\Desktop\Certificates\*.cer|% {certutil -addstore Root `$_.FullName}}`"'</Command>
+ </LogonCommand>
 </Configuration>
 "@
 

@@ -36,23 +36,23 @@ Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Ma
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
 $wsbContent = @"
 <Configuration>
-<MappedFolders>
-<MappedFolder>
-<HostFolder>${sandboxFolder}</HostFolder>
-<ReadOnly>true</ReadOnly>
- </MappedFolder>
- <MappedFolder>
-  <HostFolder>${scriptFolder}</HostFolder>
-  <ReadOnly>true</ReadOnly>
- </MappedFolder>
- <MappedFolder>
-  <HostFolder>${scoopFolder}</HostFolder>
-  <ReadOnly>true</ReadOnly>
- </MappedFolder>
+ <MappedFolders>
+  <MappedFolder>
+   <HostFolder>${sandboxFolder}</HostFolder>
+   <ReadOnly>true</ReadOnly>
+  </MappedFolder>
+  <MappedFolder>
+   <HostFolder>${scriptFolder}</HostFolder>
+   <ReadOnly>true</ReadOnly>
+  </MappedFolder>
+  <MappedFolder>
+   <HostFolder>${scoopFolder}</HostFolder>
+   <ReadOnly>true</ReadOnly>
+  </MappedFolder>
  </MappedFolders>
-  <LogonCommand>
-<Command>${cmdContent}</Command>
-</LogonCommand>
+ <LogonCommand>
+  <Command>${cmdContent}</Command>
+ </LogonCommand>
 </Configuration>
 "@
 

@@ -1,6 +1,11 @@
 # Content of Powershell script to use _inside_ sandbox
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+# Local settings
+Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
+Add-SBCertificate -Path ${env:USERPROFILE}\Desktop\wsb\certificates -Verbose
+
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
 
 scoop install git
