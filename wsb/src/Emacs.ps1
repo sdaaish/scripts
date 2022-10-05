@@ -16,6 +16,7 @@ Install-WindowsTerminal
 Install-WithWinGet -Package GNU.Emacs
 Install-WithWinGet -Package Git.Git
 Install-WithWinGet -Package Microsoft.PowerShell
+Install-WithWinGet -Package Microsoft.GitCredentialManagerCore
 #Install-WithWinGet -Package Microsoft.WindowsTerminal
 
 # Add local installed programs to PATH
