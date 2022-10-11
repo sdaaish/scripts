@@ -68,6 +68,7 @@ Install-WithWinGet -Package brimdata.brim
 
 Add-SBPath -Path 'C:\Program Files\Wireshark\'
 Add-SBPath -Path 'C:\Program Files (x86)\mitmproxy\bin'
+Add-SBPath -Path ${env:LocalAppData}\Programs\brim\resources\app.asar.unpacked\zdeps
 Update-SBPath
 
 # Local settings
