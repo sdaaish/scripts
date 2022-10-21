@@ -33,6 +33,12 @@ New-Item -Path ${env:UserProfile} -Name .config -ItemType Directory | Out-Null
 New-Item -Path ${env:UserProfile} -Name .cache -ItemType Directory | Out-Null
 New-Item -Path ${env:UserProfile} -Name .local -ItemType Directory | Out-Null
 
+# Change settings for git to get Non-GNU Elpa to work
+git config --global --add http.sslbackend schannel
+git config --global --add http.https://git.savannah.gnu.org.sslVerify false
+git config --global --add http.https://git.savannah.gnu.org.sslbackend openssl
+git config --global --add http.https://git.savannah.gnu.org.cookieFile ~/.cache/cookie.txt
+
 # Clone emacs repositories
 & git clone https://github.com/plexus/chemacs2.git ${env:UserProfile}/.emacs.d
 & git clone https://github.com/SystemCrafters/crafted-emacs ${env:UserProfile}/.config/crafted-emacs

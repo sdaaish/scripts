@@ -36,6 +36,11 @@
 (setq nano-font-family-proportional "Comic Sans MS")
 (setq nano-font-size 14)
 
+;; No menu, tool or scrollbars
+(tool-bar-mode 0)
+(set-scroll-bar-mode nil)
+(menu-bar-mode 0)
+
 ;; Load required modules.
 (require 'nano-base-colors)
 (require 'nano-faces)
