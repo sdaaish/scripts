@@ -1,3 +1,4 @@
+# Module to customize WinGet pacage manager
 Function Set-SBWinGetSettings {
 
     $WinGetHome = Join-Path ${env:LOCALAPPDATA} "Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\"
