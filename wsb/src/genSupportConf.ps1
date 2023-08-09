@@ -30,7 +30,7 @@ $guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbNam
 
 # Autorun this _inside_ the Sandbox
 $cmdContent = @"
-Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Maximized -Argumentlist '-NoProfile -NoLogo -ExecutionPolicy Bypass -File $guestPoshFile'
+Powershell Start-Process Powershell -WorkingDirectory $guestHome -WindowStyle Maximized -Argumentlist '-NoProfile -NoLogo -NoExit -ExecutionPolicy Bypass -File $guestPoshFile'
 "@
 
 # Generate the wsb-file to use to start the sandbox from Windows (outside).
