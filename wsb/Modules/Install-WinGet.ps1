@@ -34,5 +34,5 @@ Function Install-WinGet {
     Remove-Item $xamlfile -Force
 
     $time = $((Get-Date).subtract($start_time).seconds)
-    Write-Output "Downloaded WinGet in $time seconds"
+    Write-Verbose "Downloaded WinGet in $time seconds"
 }

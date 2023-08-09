@@ -20,5 +20,5 @@ Function Install-WithWinGet {
     & winget install @options
     
     $time = $((Get-Date).subtract($start_time).seconds)
-    Write-Output "Installed $Package in $time seconds"
+    Write-Verbose "Installed $Package in $time seconds"
 }
