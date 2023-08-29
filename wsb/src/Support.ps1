@@ -2,6 +2,7 @@
 
 # Reference: https://github.com/jdhitsolutions/WindowsSandboxTools/blob/main/wsbScripts/demo-config.ps1
 
+$StartTime = Get-Date
 $transcript = Start-Transcript -IncludeInvocationHeader
 
 # Enable logging
@@ -21,6 +22,7 @@ New-Alias -Name Loggit -Value Write-SetupLog
 
 # Starting the installation
 Loggit "Starting script $($MyInvocation.MyCommand)."
+Loggit "${transcript}."
 
 # Local settings
 Loggit "Importing sandbox module."
@@ -46,7 +48,7 @@ Loggit "Wait for WinGet installation to finish."
 Get-Job|Wait-Job|Format-Table Name,Command,State
 
 # Install-WindowsTerminal
-Loggit "Installing software."
+Loggit "Installing software:"
 $packages = @(
     "Git.Git"
     "7zip.7zip"
@@ -54,6 +56,7 @@ $packages = @(
     "Microsoft.VisualStudioCode"
     "Microsoft.WindowsTerminal"
 )
+Loggit "$($packages -join('; '))"
 
 $packages.foreach(
     {
@@ -79,16 +82,33 @@ Add-SBPath -Path 'C:\Program Files\Git\cmd'
 Add-SBPath -Path 'C:\Program Files\7-Zip\'
 Update-SBPath
 
+Loggit "Install modules"
+Start-Job -Name "Module-Install" -ScriptBlock { Install-Module PSScriptTools, BurntToast -Force }
+
+Loggit "Waiting for installation of modules to finish."
+Get-Job|Wait-Job|Format-Table Name,Command, State
+
 # Local settings
-Loggit "Set custom settings for Explorer, Windows terminal and WinGet."
+Loggit "Set custom settings for Explorer, Windows terminal, WinGet and VS Code."
 Set-SBExplorer
 $null = Set-SBWTSettings
 $null = Set-SBWinGetSettings
+$null = Set-SBCodeSettings
 
 # Done, starting a new terminal
 Loggit "Start Windows Terminal."
 Start-Process wt.exe "-f new-tab -d ~ -p PowerShell"
 
-Loggit "$transcript."
-Stop-Transcript
+$stop = Stop-Transcript
+Loggit "${stop}."
+
+# Display a toast
+$date = (Get-Date -Format s)
+$timeTaken = ((Get-Date ) - $startTime)
+$toastParams = @{
+    Text = "Installation done at {1}, total time: {0:hh}:{0:mm}:{0:ss}" -f $timeTaken,$date
+    Header = (New-BTHeader -Id 1 -Title "Setup Done")
+}
+Loggit "Display Toast"
+New-BurntToastNotification @toastParams
 Loggit "Script ended."

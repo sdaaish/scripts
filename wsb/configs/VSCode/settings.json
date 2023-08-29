@@ -1,0 +1,9 @@
+{
+  "update.enableWindowsBackgroundUpdates": false,
+  "update.showReleaseNotes": false,
+  "update.mode": "manual",
+  "workbench.sideBar.location": "right",
+  "workbench.panel.defaultLocation": "right",
+  "terminal.integrated.confirmOnKill": "never",
+  "terminal.integrated.tabs.enabled": false
+}
