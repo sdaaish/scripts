@@ -8,6 +8,8 @@ Function Install-WithWinGet {
 
     $start_time = Get-Date
 
+    $logfile = Join-Path $env:UserProfile Desktop\${Package}.log
+
     # Winget
     $options = @(
         "--id", $Package
@@ -15,6 +17,7 @@ Function Install-WithWinGet {
         "--source", "winget"
         "--accept-package-agreements"
         "--accept-source-agreements"
+        "--log", $logfile
     )
 
     & winget install @options
