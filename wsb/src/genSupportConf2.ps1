@@ -28,7 +28,7 @@ function New-SandboxFile {
         }
 
         $folder = @{
-            HostFolder    = $PSScriptRoot
+            HostFolder    = Split-Path $PSScriptRoot -Parent
             SandboxFolder = "{0}\Desktop\wsb" -f $guestHome
             ReadOnly      = $false
         }

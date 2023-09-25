@@ -1,5 +1,7 @@
 # Extracts scripts to this folder
 Get-ChildItem -Path $PSScriptRoot\src -Filter gen*.ps1 | Foreach-Object {
-    & $_.FullName
-    Write-Output ""
+    Write-Host "Generating WSB configuration: $_"
+    & $_
+    Write-Host "Sandbox file in $PSScriptroot\sandboxes"
+    [System.Environment]::NewLine
 }
