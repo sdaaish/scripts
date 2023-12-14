@@ -8,7 +8,11 @@ Function Install-WithWinGet {
 
     $start_time = Get-Date
 
-    $logfile = Join-Path $env:UserProfile Desktop\${Package}.log
+    if (-not (Test-Path (Join-Path $env:UserProfile Desktop\Logs))) {
+        New-Item -Path (Join-Path $env:UserProfile Desktop) -Name Logs -ItemType Directory -Force
+    }
+
+    $logfile = Join-Path $env:UserProfile Desktop\Logs\${Package}.log
 
     # Winget
     $options = @(
@@ -21,7 +25,7 @@ Function Install-WithWinGet {
     )
 
     & winget install @options
-    
+
     $time = $((Get-Date).subtract($start_time).seconds)
     Write-Verbose "Installed $Package in $time seconds"
 }
