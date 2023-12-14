@@ -31,7 +31,7 @@ Loggit "Adding Proxy certificates."
 Add-SBCertificate -Path ${env:USERPROFILE}\Desktop\wsb\certificates -Verbose
 
 Loggit "Add NuGet."
-Install-PackageProvider -Name NuGet -Force -Forcebootstrap -Scope AllUsers
+Install-PackageProvider -Name NuGet -Force -ForceBootstrap -Scope AllUsers
 $null = Register-PackageSource -ProviderName NuGet -Name Nuget.org -Location https://www.nuget.org/api/v2
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 

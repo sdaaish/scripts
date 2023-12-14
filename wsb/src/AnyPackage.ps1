@@ -18,7 +18,7 @@ $logParams = @{
 Enable-PSRemoting -Force -SkipNetworkProfileCheck
 
 "[$(Get-Date)] Install latest nuget package provider" | Out-File @logParams
-Install-PackageProvider -name nuget -force -forcebootstrap -scope allusers
+Install-PackageProvider -Name NuGet -Force -ForceBootstrap -Scope AllUsers
 
 "[$(Get-Date)] Update PackageManagement and PowerShellGet modules" | Out-File @logParams
 Install-Module PackageManagement, PowerShellGet -Force

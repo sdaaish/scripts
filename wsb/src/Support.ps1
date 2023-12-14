@@ -35,7 +35,7 @@ Loggit "Installing scoop."
 .\install.ps1 -RunAsAdmin -NoProxy
 
 Loggit "Add NuGet."
-Install-PackageProvider -Name NuGet -Force -Forcebootstrap -Scope AllUsers
+Install-PackageProvider -Name NuGet -Force -ForceBootstrap -Scope AllUsers
 $null = Register-PackageSource -ProviderName NuGet -Name Nuget.org -Location https://www.nuget.org/api/v2
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
