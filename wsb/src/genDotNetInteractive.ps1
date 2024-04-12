@@ -15,8 +15,8 @@ function New-SandboxFile {
     )
 
     process {
-        $wsbName = "Support2"
-        $Description = "Testing generation of new sandbox."
+        $wsbName = "DotNetInteractive"
+        $Description = "A sandbox with DotNet Interactive installed."
         $guestHome = "C:\Users\WDAGUtilityAccount"
         $guestPoshFile = Join-Path -Path $guestHome -ChildPath "Desktop\wsb\src\${wsbName}.ps1"
 
