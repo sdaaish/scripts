@@ -36,22 +36,21 @@ $null = Register-PackageSource -ProviderName NuGet -Name Nuget.org -Location htt
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 Loggit "Installing WinGet."
-Start-Job -Name "Install Winget" -ScriptBlock {
+$Job = Start-Job -Name "Install Winget" -ScriptBlock {
     Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
     Install-WinGet
 }
 Loggit "Wait for WinGet installation to finish."
 Get-Job|Wait-Job|Format-Table Name,Command,State
 
-# Install-WindowsTerminal
+# Install software with WinGet
 Loggit "Installing software:"
 $packages = @(
     "Git.Git"
     "7zip.7zip"
     "Microsoft.PowerShell"
     "Microsoft.VisualStudioCode"
-    "Microsoft.WindowsTerminal"
-    "Microsoft.DotNet.SDK.7"
+    "Microsoft.DotNet.SDK.8"
 )
 Loggit "$($packages -join('; '))"
 
@@ -74,15 +73,24 @@ foreach($job in (Get-Job)){
     Loggit "$result"
 }
 
+# Install Windows Terminal from GitHub
+Loggit "Installing Windows Terminal"
+$Job = Start-Job -Name "WindowsTerminal" -ScriptBlock {
+    Import-Module ${env:USERPROFILE}\Desktop\wsb\Modules\Sandbox.psd1
+    Install-WindowsTerminal
+}
+Loggit "Waiting for installation jobs to finish."
+Get-Job|Wait-Job|Format-Table Name,Command, State
+
 Loggit "Updating PATH for software packages."
 Add-SBPath -Path 'C:\Program Files\Git\cmd'
 Add-SBPath -Path 'C:\Program Files\7-Zip\'
 Update-SBPath
 
-Loggit "Installing dotnet"
-dotnet tool install --global Microsoft.dotnet-interactive --version 1.0.440301
+Loggit "Installing DotNET Interactive for version 8"
+dotnet tool install --global Microsoft.dotnet-interactive --version 1.0.520801
 
-Loggit "Install modules"
+Loggit "Install PowerShell modules"
 Start-Job -Name "Module-Install" -ScriptBlock { Install-Module PSScriptTools, BurntToast -Force }
 
 Loggit "Waiting for installation of modules to finish."
