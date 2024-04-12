@@ -1,12 +1,15 @@
 Function Install-WindowsTerminal {
+    [cmdletbinding()]
     param()
-    
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
-    $WinTerminal = "https://github.com/microsoft/terminal/releases/download/v1.12.10393.0/Microsoft.WindowsTerminal_1.12.10393.0_8wekyb3d8bbwe.msixbundle"
-    $Downloadfile = Join-Path $(Convert-Path ~/Downloads) "terminal.msixbundle"
-    (New-Object System.Net.WebClient).DownloadFile($WinTerminal, $Downloadfile)
+    # Get the latest version MSIX bundle
+    $latest = Invoke-RestMethod "https://api.github.com/repos/microsoft/terminal/releases/latest"
+    $assets = Invoke-RestMethod $latest.assets_url
+    $downloadUri = ($assets | Where-Object name -Match msixbundle$).browser_download_url
 
-    Add-AppxPackage $Downloadfile
-    Remove-Item $Downloadfile -Force
+    $downloadFile = Join-Path $(Convert-Path ~/Downloads) "terminal.msixbundle"
+    (New-Object System.Net.WebClient).DownloadFile($downloadUri, $downloadFile)
+
+    Add-AppxPackage $downloadFile
+    Remove-Item $downloadFile -Force
 }
