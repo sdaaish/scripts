@@ -19,12 +19,15 @@ Function Install-WinGet {
     $vclibsfile = Join-Path $(Resolve-Path ~\Downloads) "Microsoft.VCLibs.x64.14.00.Desktop.app"
     (New-Object System.Net.WebClient).DownloadFile($vclibs, $vclibsfile)
 
-    # Dependency of Microsoft.UI.Xaml.
-    $xaml = "https://www.nuget.org/api/v2/package/Microsoft.UI.Xaml/2.7.1"
-    $xamlfile = Join-Path $(Resolve-Path ~\Downloads) "Microsoft.UI.Xaml.2.7.zip"
+    # Dependency of Microsoft.UI.Xaml
+    [version]$version = "2.8.6"
+    $verStr = "{0}.{1}" -f $version.major,$version.minor
+
+    $xaml = "https://www.nuget.org/api/v2/package/Microsoft.UI.Xaml/{0}" -f ($version.ToString())
+    $xamlfile = Join-Path $(Resolve-Path ~\Downloads) "Microsoft.UI.Xaml.${verStr}.zip"
     (New-Object System.Net.WebClient).DownloadFile($xaml, $xamlfile)
-    Expand-Archive -Path $xamlfile -DestinationPath ~/Downloads/Microsoft.UI.Xaml.2.7
-    Add-AppxPackage ~\Downloads\Microsoft.UI.Xaml.2.7\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx
+    Expand-Archive -Path $xamlfile -DestinationPath ~/Downloads/Microsoft.UI.Xaml.${verStr}
+    Add-AppxPackage ~\Downloads\Microsoft.UI.Xaml.${verStr}\tools\AppX\x64\Release\Microsoft.UI.Xaml.${verStr}.appx
 
     Add-AppxPackage $vclibsfile
     Add-AppxPackage $download
