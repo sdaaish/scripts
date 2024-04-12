@@ -19,6 +19,6 @@ Function Add-SBPath {
         [System.Environment]::SetEnvironmentVariable("PATH",$NewPath,"Machine")
     }
     catch {
-        throw "The given Path, $path don't exist."
+        Write-Error "The given Path, $path don't exist, $Path"
     }
 }

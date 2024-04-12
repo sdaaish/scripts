@@ -8,6 +8,11 @@ Function Set-SBWTSettings {
 
     # Use Windows Terminal as default
     $key = 'HKCU:\Console\%%Startup'
+
+    if (-not (Test-Path $key)) {
+        New-Item -Path $key -Force | Out-Null
+    }
+
     Set-ItemProperty $key "DelegationTerminal" "{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}"
     Set-ItemProperty $key "DelegationConsole" "{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}"
 }
