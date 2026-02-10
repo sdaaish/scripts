@@ -31,8 +31,9 @@ Loggit "Adding Proxy certificates."
 Add-SBCertificate -Path ${env:USERPROFILE}\Desktop\wsb\certificates -Verbose
 
 Loggit "Installing scoop."
-(New-Object System.Net.WebClient).DownloadFile('https://get.scoop.sh','install.ps1')
-.\install.ps1 -RunAsAdmin -NoProxy
+$installScript = Join-Path ${env:USERPROFILE} "install.ps1"
+(New-Object System.Net.WebClient).DownloadFile('https://get.scoop.sh',$installScript)
+& $installScript -RunAsAdmin -NoProxy
 
 Loggit "Add NuGet."
 Install-PackageProvider -Name NuGet -Force -ForceBootstrap -Scope AllUsers

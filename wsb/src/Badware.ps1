@@ -107,8 +107,9 @@ $null = Set-SBWinGetSettings
 $null = Set-SBCodeSettings
 
 # Install scoop
-(New-Object System.Net.WebClient).DownloadFile('https://get.scoop.sh','install.ps1')
-.\install.ps1 -RunAsAdmin -NoProxy
+$installScript = Join-Path ${env:USERPROFILE} "install.ps1"
+(New-Object System.Net.WebClient).DownloadFile('https://get.scoop.sh',$installScript)
+& $installScript -RunAsAdmin -NoProxy
 
 # Install applications
 $ScoopLog = Join-Path ${env:USERPROFILE} "\Desktop\Scoop.log"
